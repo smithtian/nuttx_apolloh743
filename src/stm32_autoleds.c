@@ -25,68 +25,88 @@
 
 #include <nuttx/config.h>
 
+#include <stdbool.h>
 #include <debug.h>
+
+#include <sys/param.h>
 
 #include <nuttx/board.h>
 #include <arch/board/board.h>
 
-#include "arm_internal.h"
-#include "stm32_start.h"
+#include "stm32_gpio.h"
 #include "apolloh743i.h"
+
+#ifdef CONFIG_ARCH_LEDS
+
+/****************************************************************************
+ * Private Functions
+ ****************************************************************************/
+
+static inline void set_led(bool v)
+{
+  ledinfo("Turn LED %s\n", v? "on":"off");
+  stm32_gpiowrite(GPIO_STATELED, !v);
+}
 
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
 
 /****************************************************************************
- * Name: stm32_boardinitialize
- *
- * Description:
- *   All STM32 architectures must provide the following entry point.
- *   This entry point is called early in the initialization -- after all
- *   memory has been configured and mapped but before any devices have been
- *   initialized.
- *
+ * Name: board_autoled_initialize
  ****************************************************************************/
 
-void stm32_boardinitialize(void)
+void board_autoled_initialize(void)
 {
-#if defined(CONFIG_STM32H7_OTGFS_HOST) || defined(CONFIG_STM32H7_OTGHS_HOST)
-  /* Initialize USB */
+  /* Configure LED GPIO for output */
 
-  stm32_usbinitialize();
-#endif
-
-#ifdef CONFIG_ARCH_LEDS
-  /* Configure on-board LEDs if LED support has been selected. */
-
-  board_autoled_initialize();
-#endif
+  stm32_configgpio(GPIO_STATELED);
 }
 
 /****************************************************************************
- * Name: board_late_initialize
- *
- * Description:
- *   If CONFIG_BOARD_LATE_INITIALIZE is selected, then an additional
- *   initialization call will be performed in the boot-up sequence to a
- *   function called board_late_initialize().  board_late_initialize()
- *   will be called immediately after up_initialize() is called and just
- *   before the initial application is started.  This additional
- *   initialization phase may be used, for example, to initialize board-
- *   specific device drivers.
- *
+ * Name: board_autoled_on
  ****************************************************************************/
 
-#ifdef CONFIG_BOARD_LATE_INITIALIZE
-void board_late_initialize(void)
+void board_autoled_on(int led)
 {
-#if defined(CONFIG_NSH_LIBRARY) && !defined(CONFIG_BOARDCTL)
-  /* Perform board bring-up here instead of from the
-   * board_app_initialize().
-   */
+  ledinfo("board_autoled_on(%d)\n", led);
 
-  stm32_bringup();
-#endif
+  switch (led)
+    {
+    case LED_STARTED:
+    case LED_HEAPALLOCATE:
+
+      /* As the board provides only one soft controllable LED, we simply
+       * turn it on when the board boots.
+       */
+
+      set_led(false);
+      break;
+
+    case LED_PANIC:
+
+      /* For panic state, the LED is blinking */
+
+      set_led(false);
+      break;
+    }
 }
-#endif
+
+/****************************************************************************
+ * Name: board_autoled_off
+ ****************************************************************************/
+
+void board_autoled_off(int led)
+{
+  switch (led)
+    {
+    case LED_PANIC:
+
+      /* For panic state, the LED is blinking */
+
+      set_led(true);
+      break;
+    }
+}
+
+#endif /* CONFIG_ARCH_LEDS */

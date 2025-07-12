@@ -295,20 +295,34 @@
 
 /* LED definitions **********************************************************/
 
-/* LED index values for use with board_userled() */
+/* If CONFIG_ARCH_LEDS is defined, the usage by the board port is defined in
+ * include/board.h and src/stm32_leds.c.
+ * The LEDs are used to encode OS-related events as follows:
+ *
+ *
+ *   SYMBOL                     Meaning                      LED state
+ *                                                        Red   Green Blue
+ *   ----------------------  --------------------------  ------ ------ ---
+ */
 
-#define BOARD_LED1        0
-#define BOARD_LED2        1
-#define BOARD_LED3        2
-#define BOARD_LED4        3
-#define BOARD_NLEDS       4
+#define LED_STARTED        0 /* NuttX has been started   OFF    OFF   OFF  */
+#define LED_HEAPALLOCATE   1 /* Heap has been allocated  OFF    OFF   ON   */
+#define LED_IRQSENABLED    2 /* Interrupts enabled       OFF    ON    OFF  */
+#define LED_STACKCREATED   3 /* Idle stack created       OFF    ON    ON   */
+#define LED_INIRQ          4 /* In an interrupt          N/C    N/C   GLOW */
+#define LED_SIGNAL         5 /* In a signal handler      N/C    GLOW  N/C  */
+#define LED_ASSERTION      6 /* An assertion failed      GLOW   N/C   GLOW */
+#define LED_PANIC          7 /* The system has crashed   Blink  OFF   N/C  */
+#define LED_IDLE           8 /* MCU is is sleep mode     ON     OFF   OFF  */
 
-/* LED bits for use with board_userled_all() */
 
-#define BOARD_LED1_BIT    (1 << BOARD_LED1)
-#define BOARD_LED2_BIT    (1 << BOARD_LED2)
-#define BOARD_LED3_BIT    (1 << BOARD_LED3)
-#define BOARD_LED4_BIT    (1 << BOARD_LED4)
+/* LED
+ *
+ * The Appollo led
+ */
+
+#define GPIO_STATELED       (GPIO_OUTPUT | GPIO_PUSHPULL | GPIO_SPEED_50MHz | \
+                        GPIO_OUTPUT_CLEAR | GPIO_PORTB | GPIO_PIN1)
 
 /* Alternate function pin selections ****************************************/
 
