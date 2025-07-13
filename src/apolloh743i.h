@@ -97,4 +97,28 @@ void weak_function stm32_usbinitialize(void);
 int stm32_usbhost_initialize(void);
 #endif
 
+
+/* LED
+ *
+ * The Appollo led
+ */
+
+#define GPIO_STATELED   (GPIO_OUTPUT | GPIO_PUSHPULL | GPIO_SPEED_50MHz | \
+                        GPIO_OUTPUT_CLEAR | GPIO_PORTB | GPIO_PIN1)
+
+#define GPIO_DS1       (GPIO_OUTPUT | GPIO_PUSHPULL | GPIO_SPEED_50MHz | \
+                        GPIO_OUTPUT_CLEAR | GPIO_PORTB | GPIO_PIN0)
+
+#define GPIO_LED_GREEN GPIO_STATELED
+#define GPIO_LED_RED   GPIO_DS1
+
+#define LED_DRIVER_PATH "/dev/userleds"
+
+#define BOARD_LED1        0
+#define BOARD_LED2        1
+#define BOARD_NLEDS       2
+
+#define BOARD_LED_GREEN   BOARD_LED1
+#define BOARD_LED_RED     BOARD_LED2
+
 #endif /* __BOARDS_ARM_STM32H7_APOLLOH743I_SRC_APOLLOH743I_H */

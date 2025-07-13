@@ -316,14 +316,6 @@
 #define LED_IDLE           8 /* MCU is is sleep mode     ON     OFF   OFF  */
 
 
-/* LED
- *
- * The Appollo led
- */
-
-#define GPIO_STATELED       (GPIO_OUTPUT | GPIO_PUSHPULL | GPIO_SPEED_50MHz | \
-                        GPIO_OUTPUT_CLEAR | GPIO_PORTB | GPIO_PIN1)
-
 /* Alternate function pin selections ****************************************/
 
 /* USART1 (CP2102 converter) */

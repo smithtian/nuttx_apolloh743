@@ -31,4 +31,8 @@ ifeq ($(CONFIG_ARCH_LEDS),y)
 CSRCS += stm32_autoleds.c
 endif
 
+ifeq ($(CONFIG_USERLED),y)
+CSRCS += stm32_userleds.c
+endif
+
 include $(TOPDIR)/boards/Board.mk

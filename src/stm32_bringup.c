@@ -121,5 +121,13 @@ int stm32_bringup(void)
     }
 #endif
 
+#if  defined(CONFIG_USERLED) && defined(CONFIG_USERLED_LOWER)
+  ret = userled_lower_initialize(LED_DRIVER_PATH);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: userled_lower_initialize() failed: %d\n", ret);
+    }  
+#endif
+
   return OK;
 }
