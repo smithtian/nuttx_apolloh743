@@ -104,6 +104,7 @@ MEMORY
   sram3 (rwx) : ORIGIN = 0x30040000, LENGTH =   32K
   sram4 (rwx) : ORIGIN = 0x38000000, LENGTH =   64K
   bbram (rwx) : ORIGIN = 0x38800000, LENGTH =    4K
+  sdram (rwx) : ORIGIN = 0xC0000000, LENGTH =   32M
 }
 
 OUTPUT_ARCH(arm)
@@ -181,6 +182,11 @@ SECTIONS
         . = ALIGN(4);
         _sram4_heap_start = ABSOLUTE(.);
     } > sram4
+
+    .sdram_data :
+    {
+        *(.sdram_data*)
+    } > sdram
 
     /* Stabs debugging sections. */
 

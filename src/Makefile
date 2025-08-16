@@ -35,4 +35,8 @@ ifeq ($(CONFIG_USERLED),y)
 CSRCS += stm32_userleds.c
 endif
 
+ifeq ($(CONFIG_STM32H7_FMC),y)
+CSRCS += stm32_extmem.c
+endif
+
 include $(TOPDIR)/boards/Board.mk

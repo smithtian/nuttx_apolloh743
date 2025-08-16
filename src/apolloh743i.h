@@ -130,4 +130,17 @@ int stm32_usbhost_initialize(void);
 #  endif
 #endif
 
+/****************************************************************************
+ * Name: stm32_sdram_initialize
+ *
+ * Description:
+ *   Called from stm32_bringup to initialize external SDRAM access.
+ *
+ ****************************************************************************/
+
+#ifdef CONFIG_STM32H7_FMC
+void stm32_sdram_initialize(void);
+void stm32_disablefmc(void);
+#endif
+
 #endif /* __BOARDS_ARM_STM32H7_APOLLOH743I_SRC_APOLLOH743I_H */
