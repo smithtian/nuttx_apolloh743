@@ -368,6 +368,15 @@
 /* FMC clock source, use STM32_PLL1Q_FREQUENCY  */
 #define BOARD_FMC_CLK               RCC_D1CCIPR_FMCSEL_HCLK
 
+#if CONFIG_STM32H7_FMC
+#  define FMC_SDCLK_FREQUENCY  (STM32_HCLK_FREQUENCY / 2)
+#  if FMC_SDCLK_FREQUENCY > 100000000
+#    error "FMC SDRAM settings need to be adjusted for a higher FMC_SDCLK frequency"
+#  elif FMC_SDCLK_FREQUENCY < 100000000
+#    warning "The current FMC SDRAM settings may not be optimal for a lower FMC_SDCLK frequency"
+#  endif
+#endif
+
 #define GPIO_FMC_A0     (GPIO_FMC_A0_0|GPIO_SPEED_100MHz)
 #define GPIO_FMC_A1     (GPIO_FMC_A1_0|GPIO_SPEED_100MHz)
 #define GPIO_FMC_A2     (GPIO_FMC_A2_0|GPIO_SPEED_100MHz)
@@ -417,7 +426,7 @@
  */
 
 #ifdef CONFIG_STM32H7_LTDC
-#  define BOARD_SDRAM1_SIZE        (16*1024*1024)
+#  define BOARD_SDRAM1_SIZE        (30*1024*1024)
 #else
 #  define BOARD_SDRAM1_SIZE        (32*1024*1024)
 #endif

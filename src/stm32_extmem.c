@@ -178,32 +178,32 @@ void stm32_sdram_initialize(void)
    *   All timings from the datasheet for Speedgrade -7 (=7ns)
    */
 
-  putreg32(FMC_SDCR_RPIPE_1 |
-           FMC_SDCR_SDCLK_2X |
-           FMC_SDCR_CASLAT_3 |
-           FMC_SDCR_BANKS_4 |
-           FMC_SDCR_WIDTH_16 |
-           FMC_SDCR_ROWBITS_13 |
-           FMC_SDCR_COLBITS_9,
-      STM32_FMC_SDCR1);
+  // putreg32(FMC_SDCR_RPIPE_1 |
+  //          FMC_SDCR_SDCLK_2X |
+  //          FMC_SDCR_CASLAT_3 |
+  //          FMC_SDCR_BANKS_4 |
+  //          FMC_SDCR_WIDTH_16 |
+  //          FMC_SDCR_ROWBITS_13 |
+  //          FMC_SDCR_COLBITS_9,
+  //     STM32_FMC_SDCR1);
 
-  putreg32(FMC_SDCR_RPIPE_1 |
-           FMC_SDCR_SDCLK_2X |
-           FMC_SDCR_CASLAT_3 |
-           FMC_SDCR_BANKS_4 |
-           FMC_SDCR_WIDTH_16 |
-           FMC_SDCR_ROWBITS_13 |
-           FMC_SDCR_COLBITS_9,
-      STM32_FMC_SDCR2);
+  // putreg32(FMC_SDCR_RPIPE_1 |
+  //          FMC_SDCR_SDCLK_2X |
+  //          FMC_SDCR_CASLAT_3 |
+  //          FMC_SDCR_BANKS_4 |
+  //          FMC_SDCR_WIDTH_16 |
+  //          FMC_SDCR_ROWBITS_13 |
+  //          FMC_SDCR_COLBITS_9,
+  //     STM32_FMC_SDCR2);
 
-  putreg32((2 << FMC_SDTR_TRCD_SHIFT) |  /* tRCD min = 15ns */
-           (2 << FMC_SDTR_TRP_SHIFT) |   /* tRP  min = 15ns */
-           (2 << FMC_SDTR_TWR_SHIFT) |   /* tWR      = 2CLK */
-           (7 << FMC_SDTR_TRC_SHIFT) |   /* tRC  min = 63ns */
-           (4 << FMC_SDTR_TRAS_SHIFT) |  /* tRAS min = 42ns */
-           (7 << FMC_SDTR_TXSR_SHIFT) |  /* tXSR min = 70ns */
-           (2 << FMC_SDTR_TMRD_SHIFT),   /* tMRD     = 2CLK */
-      STM32_FMC_SDTR1);
+  // putreg32((2 << FMC_SDTR_TRCD_SHIFT) |  /* tRCD min = 15ns */
+  //          (2 << FMC_SDTR_TRP_SHIFT) |   /* tRP  min = 15ns */
+  //          (2 << FMC_SDTR_TWR_SHIFT) |   /* tWR      = 2CLK */
+  //          (7 << FMC_SDTR_TRC_SHIFT) |   /* tRC  min = 63ns */
+  //          (4 << FMC_SDTR_TRAS_SHIFT) |  /* tRAS min = 42ns */
+  //          (7 << FMC_SDTR_TXSR_SHIFT) |  /* tXSR min = 70ns */
+  //          (2 << FMC_SDTR_TMRD_SHIFT),   /* tMRD     = 2CLK */
+  //     STM32_FMC_SDTR1);
 
   /* SDRAM Initialization sequence */
 
@@ -220,12 +220,14 @@ void stm32_sdram_initialize(void)
    * Counter = (FMC_CLK * Refresh_Rate) - 20
    */
 
-  putreg32(683 << 1, STM32_FMC_SDRTR);
+  // putreg32(683 << 1, STM32_FMC_SDRTR);
+  putreg32(839 << 1, STM32_FMC_SDRTR);
 
   /* Disable write protection */
 
   regval = getreg32(STM32_FMC_SDCR1);
   putreg32(regval & 0xfffffdff, STM32_FMC_SDCR1);
+
 }
 
 /****************************************************************************
