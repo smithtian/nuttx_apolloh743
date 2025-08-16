@@ -323,6 +323,12 @@
 #define GPIO_USART1_RX     GPIO_USART1_RX_2    /* PA10 */
 #define GPIO_USART1_TX     GPIO_USART1_TX_2    /* PA9 */
 
+/* USART2 (CP2102 converter) */
+
+#define GPIO_USART2_RX     GPIO_USART2_RX_1    /* PA3 */
+#define GPIO_USART2_TX     GPIO_USART2_TX_1    /* PA2 */
+
+
 /* USART3 */
 
 #define GPIO_USART3_RX     GPIO_USART3_RX_3    /* PD9 */
